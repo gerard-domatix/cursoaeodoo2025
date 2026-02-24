@@ -18,3 +18,4 @@ Listado
 | Marc | Mora | marcmora_00195 |
 | Alexandra | Suarez | Alex_Discord |
 | Fran | Pérez | franperez_45514 |
+| Gerard | Campos | gerard-domatix |
