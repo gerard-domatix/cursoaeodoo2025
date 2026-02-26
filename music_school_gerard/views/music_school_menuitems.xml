@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<menuitem
+    id="music_school_menu"
+    name="Music School"
+    sequence="10"/>
+
+<menuitem
+    id="music_school_student_menu"
+    name="Student"
+    action="music_school_student_action"
+    parent="music_school_menu"
+    sequence="10"/>
+
+<menuitem
+    id="music_school_instrument_menu"
+    name="Instrument"
+    action="music_school_instrument_action"
+    parent="music_school_menu"
+    sequence="10"/>
+    
+</odoo>

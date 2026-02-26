@@ -1,0 +1,1 @@
+from . import music_school_student, music_school_instrument
