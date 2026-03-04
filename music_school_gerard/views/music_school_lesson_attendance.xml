@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="music_school_lesson_attendance_action" model="ir.actions.act_window">
+        <field name="name">Lesson Attendances</field>
+        <field name="res_model">music.school.lesson.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No attendances yet. Create one from a lesson form.
+            </p>    
+        </field>
+    </record>
+
+    <record id="music_school_lesson_attendance_view_list" model="ir.ui.view">
+        <field name="name">music.school.lesson.attendance.view.list</field>
+        <field name="model">music.school.lesson.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendances">
+                <field name="student_id"/>
+                <field name="lesson_id"/>
+                <field name="is_present" widget="boolean_toggle"/>
+                <field name="date"/>
+                <field name="notes" optional="hide"/>
+            </list>
+        </field>
+    </record>
+    
+    <record id="music_school_lesson_attendance_simple_view_list" model="ir.ui.view">
+        <field name="name">music.school.lesson.attendance.simple.view.list</field>
+        <field name="model">music.school.lesson.attendance</field>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <list string="Attendance" editable="bottom">
+                <field name="student_id"/>
+                <field name="is_present" widget="boolean_toggle"/>
+                <field name="date"/>
+                <field name="notes" optional="hide"/>
+            </list>
+        </field>
+    </record>
+</odoo>

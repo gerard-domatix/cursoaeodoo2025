@@ -43,9 +43,10 @@
                 </div>
                 <group>
                     <group> 
+                        <field name="partner_id"/>
                         <field name="reference" readonly="1"/>
-                        <field name="email" />
-                        <field name="phone" />
+                        <field name="email"/>
+                        <field name="phone"/>
                     </group>
                     <group>
                         <field name="user_id" />
