@@ -11,14 +11,15 @@ class MusicSchoolStudent(models.Model):
         string="Partner",
         help="Related contact for this student"
     )
-    email = fields.Char(string="Email", related='partner_id.email', store=True, readonly=False)
+    email = fields.Char(string="Email")
     phone = fields.Char(string="Phone", related='partner_id.phone', store=True, readonly=False)
     birthdate = fields.Date(string="Birthdate")
     age = fields.Integer(string="Age", compute="_compute_age", store=True)
     user_id = fields.Many2one(
         comodel_name='res.users',
         string="Responsible",
-        help="Responsible user for this student"
+        help="Responsible user for this student",
+        default=lambda self: self.env.user
     )
     notes = fields.Html(
         string="Notes",
@@ -39,3 +40,10 @@ class MusicSchoolStudent(models.Model):
                 record.age = age
             else:
                 record.age = 0
+    
+    @api.onchange('partner_id')
+    def _onchange_email(self):
+        if self.partner_id:
+            self.email = self.partner_id.email
+        else:
+            self.email = ''

@@ -55,4 +55,18 @@
     action="music_school_lesson_attendance_action"
     parent="music_school_menu"
     sequence="10"/>
+
+<menuitem
+    id="music_school_exam_menu"
+    name="Exam"
+    action="music_school_exam_action"
+    parent="music_school_menu"
+    sequence="10"/>
+
+<menuitem
+    id="music_school_results_menu"
+    name="Results"
+    action="music_school_results_action"
+    parent="music_school_menu"
+    sequence="10"/>
 </odoo>

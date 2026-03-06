@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="music_school_exam_action" model="ir.actions.act_window">
+        <field name="name">Exams</field>
+        <field name="res_model">music.school.exam</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first exam
+            </p>
+        </field>
+    </record>
+
+    <!-- <record id="music_school_exam_self_action" model="ir.actions.act_window">
+        <field name="name">Exams</field>
+        <field name="res_model">music.school.exam</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('course_id','=', active_id)]</field>
+        <field name="context">{'default_course_id': active_id}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first exam
+            </p>
+        </field>
+    </record> -->
+
+    <record id="music_school_exam_view_list" model="ir.ui.view">
+        <field name="name">music.school.exam.view.list</field>
+        <field name="model">music.school.exam</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1" string="Exams">
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="date" widget="date"/>
+                <field name="state"/>   
+                <field name="teacher_id"/>     
+            </list>
+        </field>
+    </record>
+
+    <record id="music_school_exam_view_form" model="ir.ui.view">
+        <field name="name">music.school.exam.view.form</field>
+        <field name="model">music.school.exam</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_generate_results" string="Generate Results" type="object" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="scheduled,completed,canceled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Exam"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="course_id"/>
+                            <field name="date" widget="date"/>
+                            <field name="instrument_id"/>
+                        </group>
+                        <group>
+                            <field name="min_score_to_pass"/>
+                            <field name="max_score"/>
+                            <field name="teacher_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="results" string="Results">
+                            <field name="results_ids" context="{'list_view_ref': 'music_school_gerard.music_school_results_simple_view_list'}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+   <record id="music_school_exam_view_kanban" model="ir.ui.view">
+        <field name="name">music.school.exam.view.kanban</field>
+        <field name="model">music.school.exam</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color" default_group_by="state" class="o_kanban_small_column">
+            <field name="name"/>
+            <field name="teacher_id"/>
+            <field name="instrument_id"/>
+            <field name="date"/>
+            <field name="course_id"/>
+                <templates>
+                    <t t-name="menu">
+                        <t t-if="widget.editable"><a role="menuitem" type="open" class="dropdown-item">Edit</a></t>
+                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
+                    <t t-name="card">
+                       <field name="name" class="fw-bold fs-5"/>
+                       <field name="instrument_id"/>
+                       <field name="course_id"/>
+                       <field name="date" widget="datetime"/>
+                       <footer>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-success">
+                                    <i class="fa fa-star me-2"/>
+                                    <field name="min_score_to_pass"/>
+                                </span>
+                            </div>
+                            <field name="teacher_id" widget="many2one_avatar_user" class="ms-auto"/>
+                       </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="music_school_exam_view_search" model="ir.ui.view">
+        <field name="name">music.school.exam.view.search</field>
+        <field name="model">music.school.exam</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="name" filter_domain="['|',('name','ilike',self),('course_id','=',self)]"/>
+                <field name="teacher_id"/>
+                <field name="instrument_id"/>
+                <field name="course_id"/>
+                <field name="state"/>
+                <filter name="scheduled" string="Scheduled" domain="[('state', '=', 'scheduled')]"/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="canceled" string="Canceled" domain="[('state', '=', 'canceled')]"/>
+                <filter name="not_completed" string="Not Completed" domain="['|',('state', '=', 'scheduled'),('state', '=', 'canceled')]"/>
+                <filter name="group_by_teacher" string="Teacher" context="{'group_by': 'teacher_id'}"/>
+            </search>
+        </field>
+    </record>
+</odoo>

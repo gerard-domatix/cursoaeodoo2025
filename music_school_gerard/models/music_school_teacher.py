@@ -9,6 +9,7 @@ class MusicSchoolTeacher(models.Model):
     phone = fields.Char(string='Phone')
     level = fields.Selection(
         selection=[
+            ('all', 'All Levels'),
             ('beginner', 'Beginner'),
             ('intermediate', 'Intermediate'),
             ('advanced', 'Advanced')

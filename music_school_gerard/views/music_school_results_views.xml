@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="music_school_results_action" model="ir.actions.act_window">
+        <field name="name">Results</field>
+        <field name="res_model">music.school.results</field>
+        <field name="view_mode">kanban,list,form,graph</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first result
+            </p>
+        </field>
+    </record>
+
+    <record id="music_school_results_view_list" model="ir.ui.view">
+        <field name="name">music.school.results.view.list</field>
+        <field name="model">music.school.results</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1" string="Results">
+                <field name="exam_id"/>
+                <field name="student_id" domain="[('id', 'in', students_ids if exam_id else [])]"/>
+                <field name="score"/>
+                <field name="passed"/>
+                <field name="teacher_notes" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+     <record id="music_school_results_simple_view_list" model="ir.ui.view">
+        <field name="name">music.school.results.simple.view.list</field>
+        <field name="model">music.school.results</field>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <list multi_edit="1" string="Results">
+                <field name="student_id" domain="[('id', 'in', students_ids if exam_id else [])]"/>
+                <field name="score"/>
+                <field name="passed"/>
+                <field name="teacher_notes" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="music_school_results_view_form" model="ir.ui.view">
+        <field name="name">music.school.results.view.form</field>
+        <field name="model">music.school.results</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="exam_id" placeholder="Exam"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="student_id" domain="[('id', 'in', students_ids if exam_id else [])]"/>
+                        <field name="score"/>
+                        <field name="passed"/>
+                    </group>
+                    <notebook>
+                        <page name="teacher_notes" string="Teacher Notes">
+                            <field name="teacher_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+     </record>
+
+    <record id="music_school_results_view_graph" model="ir.ui.view">
+        <field name="name">music.school.results.view.graph</field>
+        <field name="model">music.school.results</field>
+        <field name="arch" type="xml">
+            <graph string="Results" type="bar">
+                <field name="exam_id" type="row"/>
+                <field name="score" type="measure"/>
+            </graph>
+        </field>
+     </record>
+
+    <record id="music_school_results_view_kanban" model="ir.ui.view">
+        <field name="name">music.school.results.view.kanban</field>
+        <field name="model">music.school.results</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color" default_group_by="exam_id" class="o_kanban_small_column" can_open="1" create="0" group_create="0" group_delete="0" draggable="0">
+            <field name="student_id"/>
+            <field name="score"/>
+            <field name="passed"/>
+                <templates>
+                    <t t-name="menu">
+                        <t t-if="widget.editable"><a role="menuitem" type="open" class="dropdown-item">Edit</a></t>
+                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
+                    <t t-name="card">
+                       <field name="student_id" class="fw-bold fs-5"/>
+                       <footer>
+                            <div class="d-flex align-items-center gap-2 w-100">
+                                <span class="badge bg-secondary">
+                                    <i class="fa fa-pencil me-2"/>
+                                    <field name="score"/>
+                                </span>
+                                <field name="passed" widget="boolean_toggle" class="ms-auto"/>
+                            </div>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

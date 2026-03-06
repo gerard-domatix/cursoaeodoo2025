@@ -38,7 +38,12 @@ class MusicSchoolLesson(models.Model):
         help="Color associated with the lesson for calendar views"
     )
 
-    date = fields.Datetime(string="Date and Time")
+    date = fields.Datetime(
+        string="Date and Time",
+        default=fields.Datetime.now,
+        help="Date and time of the lesson"
+    )
+    
     duration = fields.Float(string="Duration (hours)")
     notes = fields.Text(string="Notes")
 

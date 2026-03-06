@@ -10,6 +10,7 @@
         'base'
     ],
     'data':[
+        'data/ir_cron.xml',
         'security/res_groups.xml',
         'security/ir.model.access.csv',
         'views/music_school_instrument_views.xml',
@@ -19,6 +20,8 @@
         'views/music_school_classroom_views.xml',
         'views/music_school_lesson_views.xml',
         'views/music_school_lesson_attendance.xml',
+        'views/music_school_exam_views.xml',
+        'views/music_school_results_views.xml',
         'views/music_school_menuitems.xml',
     ]
 }
