@@ -28,6 +28,7 @@ class MusicSchoolStudent(models.Model):
     )
     reference = fields.Char(string="Reference", copy=False)
 
+    attendances_count = fields.Integer(string="Attendances", compute="compute_attendances_count")
     def generate_reference(self):
         for record in self:
             record.reference = f"ESC-{record.id}{record.name}"
@@ -48,3 +49,18 @@ class MusicSchoolStudent(models.Model):
             self.email = self.partner_id.email
         else:
             self.email = ''
+
+    def action_view_attendances(self):
+        return {
+            'name': 'Attendances',
+            'type': 'ir.actions.act_window',
+            'res_model': 'music.school.lesson.attendance',
+            'view_mode': 'list,form',
+            'domain': [('student_id', '=', self.id)],
+            'context': {'default_student_id': self.id}
+        }
+    
+    def compute_attendances_count(self):
+        for record in self:
+            attendances = self.env['music.school.lesson.attendance'].search_count([('student_id', '=', record.id)])
+            record.attendances_count = attendances

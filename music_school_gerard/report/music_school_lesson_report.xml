@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_music_school_lesson" model="ir.actions.report">
+        <field name="name">Lesson</field>
+        <field name="model">music.school.lesson</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">music_school_gerard.report_music_school_lesson</field>
+        <field name="report_file">music_school_gerard.report_music_school_lesson</field>
+        <field name="print_report_name">'Lesson %s' % object.course_id.name</field>
+        <field name="binding_model_id" ref="model_music_school_lesson"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_music_school_lesson">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2><t t-out="'Lesson: %s' % o.course_id.name"/></h2>
+                            <div class="row">
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Course:</strong>
+                                    <span t-field="o.course_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Teacher:</strong>
+                                    <span t-field="o.teacher_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Classroom:</strong>
+                                    <span t-field="o.classroom_id.name"/>
+                                </div>
+                                <div class="col-auto col-3 mw-100 mb-2">
+                                    <strong>Date:</strong>
+                                    <span t-field="o.date"/>
+                                </div>
+                            </div>
+                        <table class="table table-sm o_main_table table-borderless mt-4">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">Name</th>
+                                    <th class="text-start">Is Present</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.attendance_ids" t-as="attendance">
+                                    <tr>
+                                        <td><span t-field="attendance.student_id.name"/></td>
+                                        <td><t t-out="'Yes' if attendance.is_present else 'No'"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

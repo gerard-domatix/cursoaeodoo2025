@@ -48,7 +48,7 @@
                     <button name="action_view_exams" type="object" class="oe_stat_button" icon="fa-book">
                         <field name="exam_count" string="Exams" widget="statinfo"/>
                     </button>   
-                     <button name="action_view_lessons" type="object" class="oe_stat_button" icon="fa-pencil">
+                    <button name="action_view_lessons" type="object" class="oe_stat_button" icon="fa-pencil">
                         <field name="lesson_count" string="Lessons" widget="statinfo"/>
                     </button>
                 </div>

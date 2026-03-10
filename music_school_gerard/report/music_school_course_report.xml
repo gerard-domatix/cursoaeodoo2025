@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="action_report_music_school_course" model="ir.actions.report">
-        <field name="name">Course</field>
-        <field name="model">music.school.course</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">music_school_gerard.report_music_school_course</field>
-        <field name="report_file">music_school_gerard.report_music_school_course</field>
-        <field name="print_report_name">'%s' % object.name</field>
-        <field name="binding_model_id" ref="model_music_school_course"/>
-        <field name="binding_type">report</field>
+    <record id="paperformat_music_school" model="report.paperformat">
+        <field name="name">Music School Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
     </record>
 
     <template id="report_music_school_course">
@@ -46,7 +49,7 @@
                                         <td><span t-field="student.name"/></td>
                                         <td><span t-field="student.email"/></td>
                                         <td><span t-field="student.phone"/></td>
-                                    </tr>                                 
+                                    </tr>
                                 </t>
                             </tbody>
                         </table>
@@ -55,4 +58,57 @@
             </t>
         </t>
     </template>
+
+    <template id="report_music_school_course_simple">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Courses Summary</h2>
+                    <table class="table table-sm o_main_table table-borderless mt-4">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Course</th>
+                                <th class="text-start">Start Date</th>
+                                <th class="text-start">End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td><span t-field="o.name"/></td>
+                                    <td><span t-field="o.date_start"/></td>
+                                    <td><span t-field="o.date_end"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_music_school_course" model="ir.actions.report">
+        <field name="name">Course</field>
+        <field name="model">music.school.course</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">music_school_gerard.report_music_school_course</field>
+        <field name="report_file">music_school_gerard.report_music_school_course</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="model_music_school_course"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_music_school"/>
+    </record>
+
+    <record id="action_report_music_school_course_simple" model="ir.actions.report">
+        <field name="name">Course Summary</field>
+        <field name="model">music.school.course</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">music_school_gerard.report_music_school_course_simple</field>
+        <field name="report_file">music_school_gerard.report_music_school_course_simple</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="model_music_school_course"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_music_school"/>
+    </record>
+
 </odoo>
