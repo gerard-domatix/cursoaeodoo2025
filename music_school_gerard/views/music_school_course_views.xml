@@ -39,7 +39,7 @@
                     <button name="action_active" string="Activate Course" type="object" class="btn-primary" invisible="state == 'active'"/>
                     <button name="action_archived" string="Archive Course" type="object" invisible="state == 'archived'"/>
                     <button name="action_draft" string="Set to Draft" type="object" invisible="state == 'draft'"/>
-                    <button name="action_create_lesson" string="Create Lesson" type="object" class="btn-primary"/>
+                    <button name="action_create_lesson" group="music_school_gerard.group_music_school_manager" string="Create Lesson" type="object" class="btn-primary"/>
                     <button name="action_assign_students" string="Assign Students" type="object" class="btn-primary"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,active,archived"/>
                 </header>
@@ -63,6 +63,7 @@
                             <field name="instrument_id"/>
                             <field name="state"/>
                             <field name="level"/>
+                            <field name="company_id"/>
                         </group>
                         <group>
                             <field name="date_start" optional="hide"/>

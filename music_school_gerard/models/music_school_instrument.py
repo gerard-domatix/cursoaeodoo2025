@@ -5,6 +5,7 @@ class MusicSchoolInstrument(models.Model):
     _description = 'Instrument'
 
     name = fields.Char(string="Name",required=True)
+    active = fields.Boolean(string="Active", default=True)
     type = fields.Selection(
         [
             ('string', 'String'),

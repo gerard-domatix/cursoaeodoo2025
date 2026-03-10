@@ -9,7 +9,8 @@ class MusicSchoolStudent(models.Model):
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string="Partner",
-        help="Related contact for this student"
+        help="Related contact for this student",
+        copy=False
     )
     email = fields.Char(string="Email")
     phone = fields.Char(string="Phone", related='partner_id.phone', store=True, readonly=False)
@@ -25,7 +26,7 @@ class MusicSchoolStudent(models.Model):
         string="Notes",
         help="Additional notes about the student"
     )
-    reference = fields.Char(string="Reference")
+    reference = fields.Char(string="Reference", copy=False)
 
     def generate_reference(self):
         for record in self:

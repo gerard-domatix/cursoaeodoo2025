@@ -4,8 +4,14 @@ class MusicSchoolCourse(models.Model):
     _name= 'music.school.course'
     _description = 'Course'
 
-    name = fields.Char(string = "Name", required=True)
-    description = fields.Text(string = "Description")
+    name = fields.Char(string = "Name", copy=False)
+    description = fields.Text(string = "Description", company_dependent=True)
+    active = fields.Boolean(string="Active", default=True)
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string="Company",   
+        default=lambda self: self.env.company
+    )
     state = fields.Selection(
         [
             ('draft', 'Draft'),
@@ -15,6 +21,7 @@ class MusicSchoolCourse(models.Model):
         string = 'State',
         required=True,
         group_expand='group_expand_states',
+        default='draft'
     )
     teacher_id = fields.Many2one(
         comodel_name='music.school.teacher',
@@ -59,6 +66,12 @@ class MusicSchoolCourse(models.Model):
     
     exam_count = fields.Integer(string="Exam Count", compute="_compute_exam_count")
     lesson_count = fields.Integer(string="Lesson Count", compute="_compute_lesson_count")
+
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string="Company",
+        default=lambda self: self.env.company
+    )
     
     _sql_constraints = [
         ('name_unique', 'UNIQUE(name)', 'Course name must be unique.'),

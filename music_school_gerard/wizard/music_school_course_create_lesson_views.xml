@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="music_school_course_create_lesson_action" model="ir.actions.act_window">
+        <field name="name">Create lesson</field>
+        <field name="res_model">music.school.course.create.lesson</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="music_school_gerard.model_music_school_course"/>
+        <field name="binding_view_types">list</field>
+    </record>
+    
+    <record id="music_school_course_create_lesson_view_form" model="ir.ui.view">
+        <field name="name">music.school.course.create.lesson.view.form</field>
+        <field name="model">music.school.course.create.lesson</field>
+        <field name="arch" type="xml">
+            <form string="Create Lessons">
+                <group>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                </group>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button string="Create" type="object" name="action_create_lessons" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

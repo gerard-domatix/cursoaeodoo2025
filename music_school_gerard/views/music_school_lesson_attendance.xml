@@ -33,6 +33,7 @@
         <field name="priority" eval="99"/>
         <field name="arch" type="xml">
             <list string="Attendance" editable="bottom">
+                <field name="sequence" widget="handle"/>
                 <field name="student_id"/>
                 <field name="is_present" widget="boolean_toggle"/>
                 <field name="date"/>
