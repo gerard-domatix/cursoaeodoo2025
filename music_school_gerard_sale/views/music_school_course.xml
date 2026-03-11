@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="music_school_course_view_form" model="ir.ui.view">
+        <field name="name">music.school.course.view.form</field>
+        <field name="inherit_id" ref="music_school_gerard.music_school_course_view_form"/>
+        <field name="model">music.school.course</field>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="product_id"/>
+            </field>
+            <field name="duration" position="after">
+                <field name="price"/>
+            </field>
+            <xpath expr="//header/button[last()]" position="after">
+                <button string="Create orders" name="action_create_orders" type="object" class="btn-danger"/> 
+            </xpath>
+            <div name="button_box" position="inside">
+                <button name="action_view_orders" type="object" class="oe_stat_button" icon="fa-dollar">
+                        <field name="order_count" string="Orders" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>

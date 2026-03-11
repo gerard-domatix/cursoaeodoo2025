@@ -41,6 +41,8 @@
                     <button name="action_draft" string="Set to Draft" type="object" invisible="state == 'draft'"/>
                     <button name="action_create_lesson" group="music_school_gerard.group_music_school_manager" string="Create Lesson" type="object" class="btn-primary"/>
                     <button name="action_assign_students" string="Assign Students" type="object" class="btn-primary"/>
+                    <button name="%(music_school_gerard.action_report_music_school_course)d" string="Print Course" type="action" class="btn-secondary"/>
+                    <button name="%(music_school_gerard.action_report_music_school_course_simple)d" string="Print Summary" type="action" class="btn-secondary"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,active,archived"/>
                 </header>
                 <sheet>
@@ -61,7 +63,6 @@
                         <group>
                             <field name="teacher_id" options="{'no_create': True, 'no_quick_create': True, 'no_open': True}" domain="[('level','=',level)]"/>
                             <field name="instrument_id"/>
-                            <field name="state"/>
                             <field name="level"/>
                             <field name="company_id"/>
                         </group>
