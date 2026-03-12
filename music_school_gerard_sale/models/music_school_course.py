@@ -32,8 +32,8 @@ class MusicSchoolCourse(models.Model):
             self.price = 0.0
 
     def action_create_orders(self):
+        self.order_ids.unlink()
         for student in self.students_ids:
-            self.order_ids.unlink()
             self.env['sale.order'].create({
                 'partner_id': student.partner_id.id,
                 'course_id': self.id,
@@ -44,3 +44,32 @@ class MusicSchoolCourse(models.Model):
                     'price_unit': self.price,
                 })],
             })
+    
+    def _compute_order_count(self):
+        for course in self:
+            course.order_count = len(course.order_ids)
+    
+    def action_view_orders(self):
+        return {
+            'name': 'Orders',
+            'type': 'ir.actions.act_window',
+            'res_model': 'sale.order',
+            'view_mode': 'list,form',
+            'domain': [('course_id', '=', self.id)],
+        }
+
+    def action_canceled(self):
+        res = super().action_canceled()
+        for order in self.order_ids:
+            order.action_cancel()
+        return res
+
+    def action_draft(self):
+        res = super().action_draft()    
+        for order in self.order_ids:
+            order.action_draft()
+        return res
+
+    def action_confirm_and_invoice_sales(self):
+            self.order_ids.filtered(lambda o: o.state != 'done').action_confirm()
+            self.order_ids.filtered(lambda o: o.invoice_status != 'invoiced')._create_invoices()

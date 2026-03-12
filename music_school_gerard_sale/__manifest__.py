@@ -11,6 +11,7 @@
     ],
     'data': [
         'views/music_school_course.xml',
+        'views/sale_order_views.xml',
     ],
     'application': False,
 }

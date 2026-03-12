@@ -3,17 +3,19 @@ from odoo import models, fields, api
 class MusicSchoolStudent(models.Model):
     _name = 'music.school.student'
     _description = 'Student'
+    _inherits = {'res.partner' : 'partner_id'}
 
     active = fields.Boolean(string="Active", default=True)
-    name = fields.Char(string="Name",required=True)
+    # name = fields.Char(string="Name",required=True)
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string="Partner",
         help="Related contact for this student",
-        copy=False
+        copy=False,
+        ondelete='cascade'
     )
-    email = fields.Char(string="Email")
-    phone = fields.Char(string="Phone", related='partner_id.phone', store=True, readonly=False)
+    # email = fields.Char(string="Email")
+    # phone = fields.Char(string="Phone", related='partner_id.phone', store=True, readonly=False)
     birthdate = fields.Date(string="Birthdate")
     age = fields.Integer(string="Age", compute="_compute_age", store=True)
     user_id = fields.Many2one(

@@ -7,10 +7,12 @@
     'license': 'LGPL-3',
     'category': 'Music School',
     'depends': [
-        'base'
+        'base',
+        'mail',
     ],
     'data':[
         'data/ir_cron.xml',
+        'data/ir_sequence.xml',
         'security/res_groups.xml',
         'security/ir.model.access.csv',
         'views/music_school_instrument_views.xml',

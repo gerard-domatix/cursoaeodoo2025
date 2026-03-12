@@ -3,8 +3,10 @@ from odoo import models, fields, api
 class MusicSchoolCourse(models.Model):
     _name= 'music.school.course'
     _description = 'Course'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string = "Name", copy=False)
+
+    name = fields.Char(string = "Name", copy=False, default="New Course")
     description = fields.Text(string = "Description", company_dependent=True)
     active = fields.Boolean(string="Active", default=True)
     company_id = fields.Many2one(
@@ -16,7 +18,8 @@ class MusicSchoolCourse(models.Model):
         [
             ('draft', 'Draft'),
             ('active', 'Active'),
-            ('archived', 'Archived')
+            ('archived', 'Archived'),
+            ('canceled', 'Canceled')
         ],
         string = 'State',
         required=True,
@@ -50,7 +53,7 @@ class MusicSchoolCourse(models.Model):
         default=fields.Date.today()
         )
     date_end = fields.Date(string="End Date", help="End date of the course")   
-    capacity = fields.Integer(string="Capacity")
+    capacity = fields.Integer(string="Capacity", tracking=True, help="Maximum number of students allowed in this course")
     duration = fields.Integer(string="Duration(Days)", compute="_compute_duration", store=True)
 
     color = fields.Integer(
@@ -92,17 +95,22 @@ class MusicSchoolCourse(models.Model):
         self.state = 'archived'
         self.env['music.school.lesson'].search([('course_id', '=', self.id)]).write({'state': 'completed'})
 
+    def action_canceled(self):
+        self.state = 'canceled'
+
     def action_draft(self):
         self.state = 'draft'
+        self.message_post(body="Course has been set to draft.")
 
     def group_expand_states(self, states, domain):
-        return ['draft', 'active', 'archived']
+        return ['draft', 'active', 'archived', 'canceled']
     
     def action_create_lesson(self):
         lesson = self.env['music.school.lesson'].create({
             'course_id': self.id,
             'teacher_id': self.teacher_id.id,
         })
+        lesson.message_post_with_source('mail.message_origin_link', render_values={'self':lesson, 'origin': self})
 
     def action_assign_students(self):
         for record in self:
@@ -161,3 +169,7 @@ class MusicSchoolCourse(models.Model):
         for course in courses:
             if course.date_end and course.date_end < fields.Date.today():
                 course.state = 'archived'
+
+    def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code('music.school.course')
+        return super().create(vals)

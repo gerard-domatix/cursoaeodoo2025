@@ -61,7 +61,8 @@
                         <field name="attendance_ids" context="{'default_date': date, 'list_view_ref': 'music_school_gerard.music_school_lesson_attendance_simple_view_list'}"/>
                     </page>
                 </notebook> 
-            </sheet>     
+            </sheet>    
+            <chatter/> 
         </form>
     </field>
 </record>

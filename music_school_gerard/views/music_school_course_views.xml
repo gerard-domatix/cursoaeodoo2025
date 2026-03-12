@@ -39,11 +39,12 @@
                     <button name="action_active" string="Activate Course" type="object" class="btn-primary" invisible="state == 'active'"/>
                     <button name="action_archived" string="Archive Course" type="object" invisible="state == 'archived'"/>
                     <button name="action_draft" string="Set to Draft" type="object" invisible="state == 'draft'"/>
+                    <button name="action_canceled" string="Cancel Course" type="object" invisible="state == 'canceled'" class="btn-danger"/>
                     <button name="action_create_lesson" group="music_school_gerard.group_music_school_manager" string="Create Lesson" type="object" class="btn-primary"/>
                     <button name="action_assign_students" string="Assign Students" type="object" class="btn-primary"/>
                     <button name="%(music_school_gerard.action_report_music_school_course)d" string="Print Course" type="action" class="btn-secondary"/>
                     <button name="%(music_school_gerard.action_report_music_school_course_simple)d" string="Print Summary" type="action" class="btn-secondary"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,active,archived"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,archived,canceled"/>
                 </header>
                 <sheet>
                 <div class="oe_button_box" name="button_box">
@@ -82,6 +83,7 @@
                         </page>
                     </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>

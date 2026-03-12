@@ -3,10 +3,11 @@ from odoo import models, fields
 class MusicSchoolTeacher(models.Model):
     _name = 'music.school.teacher'
     _description = 'Teacher'
+    _inherits = {'res.partner' : 'partner_id'}
 
-    name = fields.Char(string='Name', required=True)
-    email = fields.Char(string='Email')
-    phone = fields.Char(string='Phone')
+    # name = fields.Char(string='Name', required=True)
+    # email = fields.Char(string='Email')
+    # phone = fields.Char(string='Phone')
     level = fields.Selection(
         selection=[
             ('all', 'All Levels'),
@@ -16,6 +17,13 @@ class MusicSchoolTeacher(models.Model):
         ],
         string='Level',
         default='beginner'
+    )
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Partner',
+        help='Related contact for this teacher',
+        copy=False,
+        ondelete='cascade'
     )
 
     courses_count = fields.Integer(string='Courses Count', compute='_compute_courses_count')

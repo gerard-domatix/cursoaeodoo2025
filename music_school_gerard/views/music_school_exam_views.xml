@@ -6,7 +6,7 @@
         <field name="res_model">music.school.exam</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="domain">[]</field>
-        <field name="context">{}</field>
+        <field name="context">{'search_default_not_completed' : 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create your first exam
